@@ -1,8 +1,30 @@
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
 function LoginPage() {
-  const login = async () => {};
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+
+  const setNameFun = (event) => {
+    setName(event.target.value);
+  };
+
+  const setPasswordFun = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const login = async () => {
+    const userObj = {
+      name: name,
+      password: password,
+    };
+
+    const { data } = await axios.post(
+      "http://localhost:8080/api/user/login",
+      userObj
+    );
+  };
   return (
     <div className="flex flex-col items-center justify-center">
       <h1 className="text-4xl font-bold mb-8">Login</h1>
@@ -21,6 +43,7 @@ function LoginPage() {
             name="email"
             placeholder="Your email"
             required
+            onChange={setNameFun}
           />
         </div>
         <div className="mb-4">
@@ -37,6 +60,7 @@ function LoginPage() {
             name="password"
             placeholder="Your password"
             required
+            onChange={setPasswordFun}
           />
         </div>
         <button

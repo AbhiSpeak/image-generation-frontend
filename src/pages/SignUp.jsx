@@ -1,13 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import SignupSuccessMessage from "../components/SignUpSuccess";
 
 function SignupPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [signupSuccess, setSignupSuccess] = useState(false);
   const navigate = useNavigate(); // initialize useNavigate hook
-  
+
   const setNameFun = (event) => {
     console.log(event.target.value);
     setName(event.target.value);
@@ -42,8 +44,9 @@ function SignupPage() {
         setName("");
         setEmail("");
         setPassword("");
+        setSignupSuccess(true); // Set signupSuccess state to true
         //window.location.reload();
-        navigate('/login'); // navigate to login page after successful signup
+        navigate("/login"); // navigate to login page after successful signup
       }
     } catch (error) {
       console.log(`Error hitting signup route ${JSON.stringify(error)}`);
@@ -52,6 +55,7 @@ function SignupPage() {
   return (
     <div className="flex flex-col items-center justify-center">
       <h1 className="text-4xl font-bold mb-8">Sign up</h1>
+      {signupSuccess && <SignupSuccessMessage />}
       <form className="w-80" method="POST">
         <div className="mb-4">
           <label
