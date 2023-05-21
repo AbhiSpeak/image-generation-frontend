@@ -6,6 +6,7 @@ import { Home, CreatePost } from "./pages";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignUp";
 import { logout } from "./actions/userActions";
+import Favourites from "./pages/Favourites";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -60,12 +61,12 @@ const App = () => {
               {isOpen && (
                 <div className="absolute right-0 z-10 w-48 mt-2 origin-top-right bg-white rounded-md shadow-lg">
                   <div className="py-1">
-                    <span
-                      href="#"
+                    <Link
+                      to="/favourite"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                     >
                       Favourites
-                    </span>
+                    </Link>
                     <span
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                       onClick={logoutHandler}
@@ -92,6 +93,7 @@ const App = () => {
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<SignupPage />} />
+          <Route path="/favourite" element={<Favourites />} />
         </Routes>
       </main>
     </BrowserRouter>

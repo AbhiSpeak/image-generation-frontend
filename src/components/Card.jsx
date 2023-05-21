@@ -1,9 +1,19 @@
 import React from "react";
 
 import { download } from "../assets";
+import heart from "../assets/heart.svg";
 import { downloadImage } from "../utils";
+import { useDispatch, useSelector } from "react-redux";
 
 const Card = ({ _id, name, prompt, photo }) => {
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const addTofavourite = (_id)=>{
+    
+  }
+
   return (
     <div className="rounded-xl group relative shadow-card hover:shadow-cardhover card">
       <img
@@ -21,17 +31,34 @@ const Card = ({ _id, name, prompt, photo }) => {
             </div>
             <p className="text-white text-sm">{name}</p>
           </div>
-          <button
-            type="button"
-            onClick={() => downloadImage(_id, photo)}
-            className="outline-none bg-transparent border-none"
-          >
-            <img
-              src={download}
-              alt="download"
-              className="w-6 h-6 object-contain invert "
-            />
-          </button>
+          <div className="flex">
+            {userInfo ? (
+              <button
+                type="button"
+                onClick={() => addTofavourite(_id)}
+                className="outline-none bg-transparent border-none mr-2"
+              >
+                <img
+                  src={heart}
+                  alt="download"
+                  className="w-6 h-6 object-contain invert "
+                />
+              </button>
+            ) : (
+              ""
+            )}
+            <button
+              type="button"
+              onClick={() => downloadImage(_id, photo)}
+              className="outline-none bg-transparent border-none"
+            >
+              <img
+                src={download}
+                alt="download"
+                className="w-6 h-6 object-contain invert "
+              />
+            </button>
+          </div>
         </div>
       </div>
     </div>

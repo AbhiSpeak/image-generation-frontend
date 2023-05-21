@@ -11,6 +11,7 @@ const CreatePost = () => {
     name: "",
     prompt: "",
     photo: "",
+    favourite: false
   });
 
   const [generatingImg, setgeneratingImg] = useState(false);
