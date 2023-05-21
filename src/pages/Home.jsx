@@ -11,6 +11,7 @@ const RenderCards = ({ data, title }) => {
     <h2 className="mt-5 font-bold text-[#6449ff] text-xl uppercase">{title}</h2>
   );
 };
+
 const Home = () => {
   const [loading, setloading] = useState(false);
   const [allPosts, setallPosts] = useState(null);

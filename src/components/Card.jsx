@@ -4,15 +4,25 @@ import { download } from "../assets";
 import heart from "../assets/heart.svg";
 import { downloadImage } from "../utils";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 const Card = ({ _id, name, prompt, photo }) => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const addTofavourite = (_id)=>{
-    
-  }
+  const addTofavourite = async (_id) => {
+    try {
+      const obj = {
+        favourite: true,
+      };
+      const { data } = await axios.patch(
+        `http://localhost:8080/api/v1/post/${_id}`,
+        obj
+      );
+      console.log(`<<<ADDED TO FAVOURITE>>>`);
+    } catch (err) {}
+  };
 
   return (
     <div className="rounded-xl group relative shadow-card hover:shadow-cardhover card">
