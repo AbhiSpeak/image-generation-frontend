@@ -5,17 +5,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { Home, CreatePost } from "./pages";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignUp";
+import { logout } from "./actions/userActions";
 
 const App = () => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+  console.log(`USER INFO ${JSON.stringify(userInfo)}`);
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
-
+  const logoutHandler = () => {
+    dispatch(logout());
+  };
   return (
     <BrowserRouter>
       <header className="w-full flex justify-between items-center bg-white sm:px-8 px-4 py-4 border-b border-b-[#e6ebf4]">
@@ -55,18 +60,18 @@ const App = () => {
               {isOpen && (
                 <div className="absolute right-0 z-10 w-48 mt-2 origin-top-right bg-white rounded-md shadow-lg">
                   <div className="py-1">
-                    <a
+                    <span
                       href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                     >
                       Favourites
-                    </a>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    </span>
+                    <span
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                      onClick={logoutHandler}
                     >
                       Logout
-                    </a>
+                    </span>
                   </div>
                 </div>
               )}
