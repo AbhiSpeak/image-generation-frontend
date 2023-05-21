@@ -1,33 +1,46 @@
-import { Link } from "react-router-dom";
-import React, { useState } from "react";
-import axios from "axios";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Message from "../components/Message";
+import Loader from "../components/Loader";
+import { login } from "../actions/userActions";
 
 function LoginPage() {
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const dispatch = useDispatch();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = userLogin;
+  const location = useLocation();
+  const navigate = useNavigate();
+  const redirect = location.search ? location.search.split("=")[1] : "/";
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect);
+    }
+  }, [history, userInfo, redirect]);
+
   const setNameFun = (event) => {
-    setName(event.target.value);
+    setEmail(event.target.value);
   };
 
   const setPasswordFun = (event) => {
     setPassword(event.target.value);
   };
 
-  const login = async () => {
-    const userObj = {
-      name: name,
-      password: password,
-    };
-
-    const { data } = await axios.post(
-      "http://localhost:8080/api/user/login",
-      userObj
-    );
+  const loginSubmit = async (event) => {
+    event.preventDefault();
+    dispatch(login(email, password));
   };
+
   return (
     <div className="flex flex-col items-center justify-center">
       <h1 className="text-4xl font-bold mb-8">Login</h1>
+      {error && <Message variant="failure">{error}</Message>}
+      {loading && <Loader />}
       <form className="w-80">
         <div className="mb-4">
           <label
@@ -65,7 +78,7 @@ function LoginPage() {
         </div>
         <button
           className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 rounded-md"
-          onClick={login}
+          onClick={loginSubmit}
         >
           Login
         </button>

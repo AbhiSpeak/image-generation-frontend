@@ -24,7 +24,7 @@ const login = (email, password) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      "http:localhost:8080/api/user/login",
+      "http://localhost:8080/api/user/login",
       { email, password },
       config
     );
