@@ -2,11 +2,12 @@ import React from "react";
 
 import { download } from "../assets";
 import heart from "../assets/heart.svg";
+import heartRed from "../assets/heartRed.svg";
 import { downloadImage } from "../utils";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
-const Card = ({ _id, name, prompt, photo }) => {
+const Card = ({ _id, name, prompt, photo, favourite }) => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -48,11 +49,19 @@ const Card = ({ _id, name, prompt, photo }) => {
                 onClick={() => addTofavourite(_id)}
                 className="outline-none bg-transparent border-none mr-2"
               >
-                <img
-                  src={heart}
-                  alt="download"
-                  className="w-6 h-6 object-contain invert "
-                />
+                {favourite === "true" ? (
+                  <img
+                    src={heartRed}
+                    alt="download"
+                    className="w-6 h-6 object-contain invert "
+                  />
+                ) : (
+                  <img
+                    src={heart}
+                    alt="download"
+                    className="w-6 h-6 object-contain invert "
+                  />
+                )}
               </button>
             ) : (
               ""
