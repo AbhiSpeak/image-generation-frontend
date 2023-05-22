@@ -44,6 +44,10 @@ const Home = () => {
     fetchPosts();
   }, []);
 
+  const cardClick = () =>{
+
+  }
+
   const handleSearchChange = (e) => {
     clearTimeout(searchTimeout);
     setsearchText(e.target.value);
@@ -102,7 +106,7 @@ const Home = () => {
                   title="No search results found"
                 />
               ) : (
-                <RenderCards data={allPosts} title="No posts found" />
+                <RenderCards data={allPosts} title="No posts found" onClick={cardClick} />
               )}
             </div>
           </>

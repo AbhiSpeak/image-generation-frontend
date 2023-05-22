@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { download } from "../assets";
 import heart from "../assets/heart.svg";
@@ -11,6 +11,7 @@ const Card = ({ _id, name, prompt, photo, favourite }) => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+  const [favouriteState, setFavourite] = useState(false);
 
   const addTofavourite = async (_id) => {
     try {
@@ -21,10 +22,13 @@ const Card = ({ _id, name, prompt, photo, favourite }) => {
         `http://localhost:8080/api/v1/post/${_id}`,
         obj
       );
+      setFavourite(true);
       console.log(`<<<ADDED TO FAVOURITE>>>`);
     } catch (err) {}
   };
-
+  useEffect(() => {
+    console.log(`<<<Card UseEffect Called>>>`);
+  }, [favouriteState]);
   return (
     <div className="rounded-xl group relative shadow-card hover:shadow-cardhover card">
       <img
@@ -49,7 +53,7 @@ const Card = ({ _id, name, prompt, photo, favourite }) => {
                 onClick={() => addTofavourite(_id)}
                 className="outline-none bg-transparent border-none mr-2"
               >
-                {favourite === "true" ? (
+                {favouriteState === true || favourite === "true" ? (
                   <img
                     src={heartRed}
                     alt="download"
